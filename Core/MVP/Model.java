@@ -4,6 +4,7 @@ import Core.Services.DrawingService;
 import Core.Models.Toy;
 
 import java.io.*;
+import java.util.List;
 
 public class Model {
     DrawingService currentDrawingService;
@@ -20,7 +21,7 @@ public class Model {
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
             String toyId = reader.readLine();
-            while (toyId!= null) {
+            while (toyId != null) {
                 String name = reader.readLine();
                 String weight = reader.readLine();
                 this.currentDrawingService.putForDrawing(new Toy(Integer.parseInt(toyId), name, Integer.parseInt(weight)));
@@ -54,4 +55,18 @@ public class Model {
         return this.currentDrawingService;
     }
 
+    public void saveResult(String pathResult, List<Toy> toysList) {
+        try (FileWriter writer = new FileWriter(pathResult, false)) {
+            for (Toy toy : toysList) {
+                writer.append(String.format("%s  ", toy.getId()));
+                writer.append(String.format("%s  ", toy.getName()));
+                writer.append(String.format("%s  ", toy.getWeight()));
+                writer.append("\n");
+                writer.flush();
+            }
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }

@@ -35,8 +35,7 @@ public class App {
                     case "1" -> presenter.putForDrawing();
                     case "2" -> presenter.deleteFromDrawing();
                     case "3" ->
-                            //presenter.getDrawing();
-                            presenter.getDrawingWithoutRemoving();
+                            presenter.getDrawing();
                     case "4" -> presenter.showAll();
                     case "5" -> presenter.clearAll();
                     case "6" -> presenter.saveToFile();
