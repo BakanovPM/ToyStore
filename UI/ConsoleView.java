@@ -57,10 +57,21 @@ public class ConsoleView implements View {
     }
 
     @Override
+    public void showGetToy(Toy toy) {
+        System.out.print("\nDraw results: ");
+        System.out.println(toy);
+    }
+
+    @Override
+    public void loadMessage() {
+        System.out.println("\nFile is loaded to current session");
+    }
+
+    @Override
     public boolean clearAllDecision() {
         boolean f = false;
         System.out.print("\nAre you sure to clean all entries (y/n): ");
-        if (in.nextLine().equalsIgnoreCase("Y")){
+        if (in.nextLine().equalsIgnoreCase("Y")) {
             f = true;
         }
         return f;
@@ -84,6 +95,12 @@ public class ConsoleView implements View {
     @Override
     public void emptyListMessage() {
         System.out.println("Toys list is empty!");
+    }
+
+    @Override
+    public int getDrawTimes() {
+        System.out.print("How many times do you want for drawing: ");
+        return Integer.parseInt(in.nextLine());
     }
 
 }
