@@ -73,14 +73,20 @@ public class Presenter {
     public void getDrawingWithoutRemoving() {
         PriorityQueue<Toy> priorityQueue = new PriorityQueue<>();
         Toy drawnToy;
-        int times = view.getDrawTimes();
-        priorityQueue.addAll(model.currentDrawingService().getToys());
-        for (int i=0; i < times; i++){
-            if (priorityQueue.size() == 0) {
-                priorityQueue.addAll(model.currentDrawingService().getToys());
+        if (model.currentDrawingService.getToys().size() != 0){
+            int times = view.getDrawTimes();
+            priorityQueue.addAll(model.currentDrawingService().getToys());
+            for (int i=0; i < times; i++){
+                if (priorityQueue.size() == 0) {
+                    priorityQueue.addAll(model.currentDrawingService().getToys());
+                }
+                drawnToy = priorityQueue.remove();
+                view.showGetToy(drawnToy);
             }
-            drawnToy = priorityQueue.remove();
-            view.showGetToy(drawnToy);
         }
+        else
+            view.emptyListMessage();
+
+
     }
 }
