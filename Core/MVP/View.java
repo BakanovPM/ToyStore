@@ -16,4 +16,7 @@ public interface View {
     void savedItem();
     void saveError();
     void emptyListMessage();
+    void showGetToy(Toy toy);
+    void loadMessage();
+    int getDrawTimes();
 }

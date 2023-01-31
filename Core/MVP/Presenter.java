@@ -3,6 +3,8 @@ package Core.MVP;
 import Core.Models.Toy;
 import UI.ConsoleView;
 
+import java.util.PriorityQueue;
+
 public class Presenter {
     private final Model model;
     private final View view;
@@ -12,8 +14,9 @@ public class Presenter {
         model = new Model(pathDb);
     }
 
-    public void LoadFromFile() {
+    public void loadFromFile() {
         model.load();
+        view.loadMessage();
     }
 
     public void putForDrawing() {
@@ -52,5 +55,38 @@ public class Presenter {
                 System.out.println("All entries are cleaned!");
             }
         }
+    }
+
+    public void getDrawing() {
+        PriorityQueue<Toy> priorityQueue = new PriorityQueue<>();
+        Toy drawnToy;
+        priorityQueue.addAll(model.currentDrawingService().getToys());
+        if (priorityQueue.size() != 0) {
+            drawnToy = priorityQueue.remove();
+            model.currentDrawingService().remove(drawnToy.getId());
+            view.showGetToy(drawnToy);
+        } else
+            view.emptyListMessage();
+
+    }
+
+    public void getDrawingWithoutRemoving() {
+        PriorityQueue<Toy> priorityQueue = new PriorityQueue<>();
+        Toy drawnToy;
+        if (model.currentDrawingService.getToys().size() != 0){
+            int times = view.getDrawTimes();
+            priorityQueue.addAll(model.currentDrawingService().getToys());
+            for (int i=0; i < times; i++){
+                if (priorityQueue.size() == 0) {
+                    priorityQueue.addAll(model.currentDrawingService().getToys());
+                }
+                drawnToy = priorityQueue.remove();
+                view.showGetToy(drawnToy);
+            }
+        }
+        else
+            view.emptyListMessage();
+
+
     }
 }

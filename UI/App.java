@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class App {
     public static void buttonClick() {
         Presenter presenter = new Presenter(new ConsoleView(), Config.pathDb);
-        presenter.LoadFromFile();
+        presenter.loadFromFile();
 
         String id;
         String command;
@@ -24,37 +24,24 @@ public class App {
                     4 - Show toys for drawing
                     5 - Clear all entries
                     6 - Save all entries to file
-                    7 - Exit
+                    7 - Load all entries from file
+                    8 - Exit
                     Make your choice:\s""");
-            if (command.equals("7")) {
+            if (command.equals("8")) {
                 return;
             }
             try {
                 switch (command) {
-                    case "1":
-                        presenter.putForDrawing();
-                        break;
-
-                    case "2":
-                        presenter.deleteFromDrawing();
-                        break;
-
-                    case "3":
-                        //presenter.makeDrawing();
-                        break;
-                    case "4":
-                        presenter.showAll();
-                        break;
-                    case "5":
-                        presenter.clearAll();
-                        break;
-                    case "6":
-                        presenter.saveToFile();
-                        break;
-
-                    default:
-                        System.out.println("\n Command not found!");
-
+                    case "1" -> presenter.putForDrawing();
+                    case "2" -> presenter.deleteFromDrawing();
+                    case "3" ->
+                            //presenter.getDrawing();
+                            presenter.getDrawingWithoutRemoving();
+                    case "4" -> presenter.showAll();
+                    case "5" -> presenter.clearAll();
+                    case "6" -> presenter.saveToFile();
+                    case "7" -> presenter.loadFromFile();
+                    default -> System.out.println("\n Command not found!");
                 }
             } catch (Exception e) {
                 System.out.println("Error. " + e.getMessage());
@@ -67,11 +54,12 @@ public class App {
         System.out.print(message);
         return in.nextLine();
     }
+
     private static Toy toyCreate() {
         int id = Integer.parseInt(prompt("Toy id: "));
         String name = prompt("Toy name: ");
         String weight = prompt("Toy weight: ");
-        return (new Toy(id,name,Integer.parseInt(weight)));
+        return (new Toy(id, name, Integer.parseInt(weight)));
     }
 }
 
